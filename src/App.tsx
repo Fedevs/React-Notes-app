@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { NewNoteInput } from "./components/NewNoteInput";
+import { v4 as uuidv4 } from "uuid";
+import { useAppDispatch, useAppSelector, notesAppActions } from "./redux";
 
 function App() {
+  const notes = useAppSelector((state) => state.notesApp.notes);
+  const dispatch = useAppDispatch();
+
+  const addNote = (note: string) => {
+    dispatch(notesAppActions.addNote(note));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NewNoteInput addNote={addNote} />
+      <ul>
+        {notes.map((note: string) => {
+          return <li key={uuidv4()}>{note}</li>;
+        })}
+      </ul>
+    </>
   );
 }
 
