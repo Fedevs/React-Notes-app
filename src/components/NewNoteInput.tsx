@@ -5,42 +5,63 @@ import {
   notesAppActions,
   Note,
 } from "../redux";
-import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
+import { Input, FormControl, Textarea, Button, VStack } from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
 
 interface NewNoteInputProps {
-  addNote(note: Note): void;
+  addNote(event: React.SyntheticEvent, note: Note): void;
 }
 
 export const NewNoteInput: React.FC<NewNoteInputProps> = ({ addNote }) => {
-  const note = useAppSelector((state) => state.notesApp.note.text);
+  const { title, description } = useAppSelector((state) => state.notesApp.note);
   const dispatch = useAppDispatch();
-
-  const updateNote = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(notesAppActions.updateNote(event.target.value));
+  const formStyle = {
+    width: "100%",
   };
 
-  const onAddNoteClick = () => {
-    addNote({ id: uuidv4(), text: note });
+  const updateNoteTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    dispatch(notesAppActions.updateNoteTitle(event.target.value));
+  };
+
+  const updateNoteDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(notesAppActions.updateNoteDescription(event.target.value));
+  };
+
+  const onAddNoteClick = (event: React.SyntheticEvent) => {
+    addNote(event, { id: uuidv4(), title, description });
     resetNote();
   };
 
   const resetNote = () => {
-    dispatch(notesAppActions.updateNote(""));
+    dispatch(notesAppActions.resetNote());
   };
 
   return (
-    <InputGroup size="md">
-      <Input
-        onChange={updateNote}
-        value={note}
-        type="text"
-        name="note"
-        placeholder="Note"
-      />
-      <InputRightElement width="5rem">
-        <Button onClick={onAddNoteClick}>Add note</Button>
-      </InputRightElement>
-    </InputGroup>
+    <>
+      <VStack w="100%">
+        <form onSubmit={onAddNoteClick} style={formStyle}>
+          <FormControl isRequired>
+            <Input
+              onChange={updateNoteTitle}
+              value={title}
+              type="text"
+              name="title"
+              placeholder="Title"
+            />
+          </FormControl>
+          <FormControl isRequired my={2}>
+            <Textarea
+              onChange={updateNoteDescription}
+              value={description}
+              name="description"
+              placeholder="Description"
+            ></Textarea>
+          </FormControl>
+          <Button type="submit" w="100%">
+            Add note
+          </Button>
+        </form>
+      </VStack>
+    </>
   );
 };

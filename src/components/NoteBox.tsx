@@ -1,13 +1,27 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Heading, Center } from "@chakra-ui/react";
 
 interface NoteBoxProps {
-  note: string;
+  title: string;
+  description: string;
 }
 
-export const NoteBox: React.FC<NoteBoxProps> = ({ note }) => {
+export const NoteBox: React.FC<NoteBoxProps> = ({ title, description }) => {
   return (
-    <Box p={2} shadow="md" borderWidth="1px" w="100%" h="130px">
-      <Text overflow="hidden">{note}</Text>
+    <Box
+      p={2}
+      shadow="md"
+      borderWidth="1px"
+      maxW="100%"
+      maxH="130px"
+      overflow={"scroll"}
+      textOverflow={"ellipsis"}
+    >
+      <Heading size="sm">
+        <Center>{title}</Center>
+      </Heading>
+      <Text mt={2} fontSize="sm">
+        {description}
+      </Text>
     </Box>
   );
 };

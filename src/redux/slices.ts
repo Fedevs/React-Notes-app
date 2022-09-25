@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Note {
   id: string;
-  text: string;
+  title: string;
+  description: string;
 }
 
 interface NotesState {
@@ -12,8 +13,8 @@ interface NotesState {
 }
 
 const initialState: NotesState = {
-  note: { id: "", text: "" },
-  selectedNote: { id: "", text: "" },
+  note: { id: "", title: "", description: "" },
+  selectedNote: { id: "", title: "", description: "" },
   notes: [],
 };
 
@@ -24,8 +25,16 @@ export const notesAppSlice = createSlice({
     addNote: (state, action: PayloadAction<Note>) => {
       state.notes = [...state.notes, action.payload];
     },
-    updateNote: (state, action: PayloadAction<string>) => {
-      state.note.text = action.payload;
+    updateNoteTitle: (state, action: PayloadAction<string>) => {
+      state.note.title = action.payload;
+    },
+    updateNoteDescription: (state, action: PayloadAction<string>) => {
+      state.note.description = action.payload;
+    },
+    resetNote: (state) => {
+      state.note.id = "";
+      state.note.title = "";
+      state.note.description = "";
     },
     selectNote: (state, action: PayloadAction<Note>) => {
       state.selectedNote = state.notes.find(

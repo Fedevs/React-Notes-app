@@ -8,7 +8,8 @@ function App() {
   const { selectedNote, notes } = useAppSelector((state) => state.notesApp);
   const dispatch = useAppDispatch();
 
-  const addNote = (note: Note) => {
+  const addNote = (event: React.SyntheticEvent, note: Note) => {
+    event.preventDefault();
     dispatch(notesAppActions.addNote(note));
   };
 
@@ -20,9 +21,9 @@ function App() {
     <>
       <Container maxW={"100%"} h="100vh">
         <Flex w="100%" p={12}>
-          <Box w="1200px" p={4}>
+          <Box w="1200px" p={4} maxW="1200px">
             <NewNoteInput addNote={addNote} />
-            <Grid mt={4} templateColumns="1fr" gap={6}>
+            <Grid mt={4} templateColumns="1fr" gap={6} w="100%">
               {notes.map((note: Note) => {
                 return (
                   <GridItem
@@ -31,15 +32,20 @@ function App() {
                     cursor="pointer"
                     onClick={() => selectNote(note)}
                   >
-                    <NoteBox note={note.text} />
+                    <NoteBox
+                      title={note.title}
+                      description={note.description}
+                    />
                   </GridItem>
                 );
               })}
             </Grid>
           </Box>
 
-          <Box w="100%" shadow="md" borderWidth="1px" h="100%" p={4}>
-            {selectedNote && <SelectedNoteBox note={selectedNote.text} />}
+          <Box w="100%" borderWidth="1px" h="100%" p={4}>
+            {selectedNote && (
+              <SelectedNoteBox note={selectedNote.description} />
+            )}
           </Box>
         </Flex>
       </Container>
