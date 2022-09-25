@@ -9,7 +9,7 @@ const initialState: NotesState = {
 };
 
 export const noteSlice = createSlice({
-  name: "note",
+  name: "notesApp",
   initialState,
   reducers: {
     addNote: (state, action: PayloadAction<string>) => {
