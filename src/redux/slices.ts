@@ -7,13 +7,13 @@ interface Note {
 
 interface NotesState {
   note: Note;
-  selectedNote?: string;
+  selectedNote?: Note;
   notes: Array<Note>;
 }
 
 const initialState: NotesState = {
   note: { id: "", text: "" },
-  selectedNote: "",
+  selectedNote: { id: "", text: "" },
   notes: [],
 };
 
@@ -27,10 +27,10 @@ export const notesAppSlice = createSlice({
     updateNote: (state, action: PayloadAction<string>) => {
       state.note.text = action.payload;
     },
-    getNote: (state, action: PayloadAction<string>) => {
+    selectNote: (state, action: PayloadAction<Note>) => {
       state.selectedNote = state.notes.find(
-        (note: Note) => note.id === action.payload
-      )?.id;
+        (note: Note) => note.id === action.payload.id
+      );
     },
   },
 });
