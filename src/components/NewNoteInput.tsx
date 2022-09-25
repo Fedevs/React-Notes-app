@@ -1,12 +1,19 @@
 import React, { ChangeEvent } from "react";
-import { useAppDispatch, useAppSelector, notesAppActions } from "../redux";
+import {
+  useAppDispatch,
+  useAppSelector,
+  notesAppActions,
+  Note,
+} from "../redux";
+import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
+import { v4 as uuidv4 } from "uuid";
 
 interface NewNoteInputProps {
-  addNote(note: string): void;
+  addNote(note: Note): void;
 }
 
 export const NewNoteInput: React.FC<NewNoteInputProps> = ({ addNote }) => {
-  const note = useAppSelector((state) => state.notesApp.note);
+  const note = useAppSelector((state) => state.notesApp.note.text);
   const dispatch = useAppDispatch();
 
   const updateNote = (event: ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +21,7 @@ export const NewNoteInput: React.FC<NewNoteInputProps> = ({ addNote }) => {
   };
 
   const onAddNoteClick = () => {
-    addNote(note);
+    addNote({ id: uuidv4(), text: note });
     resetNote();
   };
 
@@ -23,15 +30,17 @@ export const NewNoteInput: React.FC<NewNoteInputProps> = ({ addNote }) => {
   };
 
   return (
-    <div>
-      <input
+    <InputGroup size="md">
+      <Input
         onChange={updateNote}
         value={note}
         type="text"
         name="note"
         placeholder="Note"
       />
-      <button onClick={onAddNoteClick}>Add note</button>
-    </div>
+      <InputRightElement width="5rem">
+        <Button onClick={onAddNoteClick}>Add note</Button>
+      </InputRightElement>
+    </InputGroup>
   );
 };
