@@ -8,7 +8,7 @@ const initialState: NotesState = {
   notes: [],
 };
 
-export const noteSlice = createSlice({
+export const notesAppSlice = createSlice({
   name: "notesApp",
   initialState,
   reducers: {
@@ -18,6 +18,6 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { addNote } = noteSlice.actions;
+export const notesAppActions = notesAppSlice.actions;
 
-export default noteSlice.reducer;
+export const notesAppReducer = notesAppSlice.reducer;
