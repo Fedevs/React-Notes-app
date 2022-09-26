@@ -13,8 +13,7 @@ export const NoteBox: React.FC<NoteBoxProps> = ({ title, description }) => {
       borderWidth="1px"
       maxW="100%"
       maxH="130px"
-      overflow={"scroll"}
-      textOverflow={"ellipsis"}
+      overflowY={"auto"}
     >
       <Heading size="sm">
         <Center>{title}</Center>
