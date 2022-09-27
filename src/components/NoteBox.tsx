@@ -6,9 +6,16 @@ import { Flex, Spacer } from "@chakra-ui/react";
 interface NoteBoxProps {
   title: string;
   description: string;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
-export const NoteBox: React.FC<NoteBoxProps> = ({ title, description }) => {
+export const NoteBox: React.FC<NoteBoxProps> = ({
+  title,
+  description,
+  onEdit,
+  onDelete,
+}) => {
   return (
     <Box
       p={2}
@@ -24,8 +31,16 @@ export const NoteBox: React.FC<NoteBoxProps> = ({ title, description }) => {
         </Box>
         <Spacer />
         <ButtonGroup gap="2">
-          <IconButton aria-label="Edit note" icon={<EditIcon />} />
-          <IconButton aria-label="Delete note" icon={<DeleteIcon />} />
+          <IconButton
+            aria-label="Edit note"
+            onClick={onEdit}
+            icon={<EditIcon />}
+          />
+          <IconButton
+            aria-label="Delete note"
+            onClick={onDelete}
+            icon={<DeleteIcon />}
+          />
         </ButtonGroup>
       </Flex>
       <Text mt={2} fontSize="sm">
