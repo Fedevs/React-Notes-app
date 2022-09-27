@@ -1,4 +1,7 @@
-import { Box, Text, Heading, Center } from "@chakra-ui/react";
+import { Box, Text, Heading, ButtonGroup } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { Flex, Spacer } from "@chakra-ui/react";
 
 interface NoteBoxProps {
   title: string;
@@ -15,9 +18,16 @@ export const NoteBox: React.FC<NoteBoxProps> = ({ title, description }) => {
       maxH="130px"
       overflowY={"auto"}
     >
-      <Heading size="sm">
-        <Center>{title}</Center>
-      </Heading>
+      <Flex minWidth="max-content" alignItems="center" gap="2">
+        <Box p="2">
+          <Heading size="md">{title}</Heading>
+        </Box>
+        <Spacer />
+        <ButtonGroup gap="2">
+          <IconButton aria-label="Edit note" icon={<EditIcon />} />
+          <IconButton aria-label="Delete note" icon={<DeleteIcon />} />
+        </ButtonGroup>
+      </Flex>
       <Text mt={2} fontSize="sm">
         {description}
       </Text>
